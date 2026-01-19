@@ -1,0 +1,8 @@
+<svg width="300" height="250" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="250" fill="#DEB887"/>
+  <rect x="60" y="70" width="180" height="100" fill="#CD853F" rx="10"/>
+  <circle cx="120" cy="90" r="8" fill="#8B4513"/>
+  <circle cx="150" cy="85" r="8" fill="#8B4513"/>
+  <circle cx="180" cy="90" r="8" fill="#8B4513"/>
+  <text x="150" y="200" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">Gethuk</text>
+</svg>

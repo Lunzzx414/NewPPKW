@@ -1,0 +1,7 @@
+<svg width="300" height="250" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="250" fill="#FFEB99"/>
+  <circle cx="150" cy="100" r="50" fill="#FFD700"/>
+  <circle cx="120" cy="75" r="12" fill="#FFF"/>
+  <circle cx="180" cy="75" r="12" fill="#FFF"/>
+  <text x="150" y="200" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">Lemon Stardust</text>
+</svg>

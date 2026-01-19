@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Placeholder Images</title>
+</head>
+<body>
+    <h1>Placeholder Images Generated</h1>
+    <p>Right-click on each image and select "Save image as" to save it:</p>
+    
+    <h2>Cakes</h2>
+    <img src="https://via.placeholder.com/300x250/FFB6D9/FFFFFF?text=Rose+Strawberry" alt="cake1">
+    <img src="https://via.placeholder.com/300x250/8B4513/FFFFFF?text=Chocolate+Delight" alt="cake2">
+    <img src="https://via.placeholder.com/300x250/FFEB99/333333?text=Lemon+Stardust" alt="cake3">
+    <img src="https://via.placeholder.com/300x250/98FF98/333333?text=Matcha+Cloud" alt="cake4">
+    <img src="https://via.placeholder.com/300x250/FFF8DC/333333?text=Vanilla+Dream" alt="cake5">
+    
+    <h2>Snacks</h2>
+    <img src="https://via.placeholder.com/300x250/90EE90/333333?text=Klepon" alt="snack1">
+    <img src="https://via.placeholder.com/300x250/F0E68C/333333?text=Onde-Onde" alt="snack2">
+    <img src="https://via.placeholder.com/300x250/DEB887/333333?text=Gethuk" alt="snack3">
+    <img src="https://via.placeholder.com/300x250/CD853F/FFFFFF?text=Bogis+Jawa" alt="snack4">
+    <img src="https://via.placeholder.com/300x250/FFD700/333333?text=Rangi" alt="snack5">
+
+    <script>
+        // Alternative: Create canvas-based placeholder images
+        const cakes = [
+            {name: 'Rose Strawberry', color: '#FFB6D9', file: 'cake1.jpg'},
+            {name: 'Chocolate Delight', color: '#8B4513', file: 'cake2.jpg'},
+            {name: 'Lemon Stardust', color: '#FFEB99', file: 'cake3.jpg'},
+            {name: 'Matcha Cloud', color: '#98FF98', file: 'cake4.jpg'},
+            {name: 'Vanilla Dream', color: '#FFF8DC', file: 'cake5.jpg'}
+        ];
+        
+        const snacks = [
+            {name: 'Klepon', color: '#90EE90', file: 'snack1.jpg'},
+            {name: 'Onde-Onde', color: '#F0E68C', file: 'snack2.jpg'},
+            {name: 'Gethuk', color: '#DEB887', file: 'snack3.jpg'},
+            {name: 'Bogis Jawa', color: '#CD853F', file: 'snack4.jpg'},
+            {name: 'Rangi', color: '#FFD700', file: 'snack5.jpg'}
+        ];
+
+        function createImage(name, color) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 300;
+            canvas.height = 250;
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, 300, 250);
+            
+            // Text
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 24px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(name, 150, 125);
+            
+            return canvas.toDataURL('image/jpeg', 0.8);
+        }
+
+        console.log('Images created - you can download them from the image URLs above');
+    </script>
+</body>
+</html>

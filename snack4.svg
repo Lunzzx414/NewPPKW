@@ -1,0 +1,6 @@
+<svg width="300" height="250" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="250" fill="#CD853F"/>
+  <rect x="70" y="80" width="160" height="90" fill="#8B4513" rx="5"/>
+  <rect x="80" y="90" width="140" height="70" fill="#A0522D"/>
+  <text x="150" y="200" font-size="24" font-weight="bold" text-anchor="middle" fill="#FFF">Bogis Jawa</text>
+</svg>

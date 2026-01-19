@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LumCake — Soft & Dreamy Bakery</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="LumCake — dreamy pastel cakes and treats. A colorful, aesthetic landing page demo.">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo-wrap">
+      <img src="Lumcakees.png" alt="LumCake logo" class="logo">
+    </div>
+    <nav class="nav">
+      <a href="#about">About</a>
+      <a href="#menu">Menu</a>
+      <a href="#contact">Contact</a>
+      <a href="login.html" class="nav-auth">Login</a>
+      <a href="register.html" class="nav-auth">Register</a>
+      <a href="account.html" class="nav-auth">Account</a>
+    </nav>
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1 class="hero-title">LumCake</h1>
+        <p class="hero-sub">Soft, dreamy cakes baked with starlight and sprinkles.</p>
+        <div class="cta-row">
+          <a href="#menu" class="btn primary">Order Now</button>
+          <a href="#menu" class="btn ghost">See Menu</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="plate-glow"></div>
+      </div>
+    </section>
+
+    <section id="about" class="cards">
+      <article class="card">
+        <h3>Our Story</h3>
+        <p>Born under a crescent moon, we craft small-batch cakes that taste like warm memories.</p>
+      </article>
+      <article class="card">
+        <h3>Flavors</h3>
+        <p>Rose & Vanilla, Matcha Cloud, Lemon Stardust, and seasonal specials.</p>
+      </article>
+      <article class="card">
+        <h3>Local Delivery</h3>
+        <p>Contact-free local delivery with a complimentary sprinkle pack.</p>
+      </article>
+    </section>
+
+    <section id="menu" class="menu-section">
+      <h2>Menu Highlights</h2>
+      
+      <div class="section-title">Cakes</div>
+      <ul class="menu-grid cakes-grid">
+        <li data-name="Rose Strawberry" data-price="280000" data-img="Cake1.jpg" class="cake-item">
+          <img src="Cake1.jpg" alt="Cake"/>
+          <strong>Rose Strawberry</strong>
+          <span>Rp 280.000</span>
+        </li>
+        <li data-name="Chocolate Delight" data-price="300000" data-img="cake2.jpg" class="cake-item">
+          <img src="cake2.jpg" alt="Cake"/>
+          <strong>Chocolate Delight</strong>
+          <span>Rp 300.000</span>
+        </li>
+        <li data-name="Lemon Stardust" data-price="260000" data-img="cake3.jpg" class="cake-item">
+          <img src="cake3.jpg" alt="Cake"/>
+          <strong>Lemon Stardust</strong>
+          <span>Rp 260.000</span>
+        </li>
+        <li data-name="Matcha Cloud" data-price="290000" data-img="Match.jpg" class="cake-item">
+          <img src="Match.jpg" alt="Cake"/>
+          <strong>Matcha Cloud</strong>
+          <span>Rp 290.000</span>
+        </li>
+        <li data-name="Vanilla Dream" data-price="270000" data-img="vani.jpg" class="cake-item">
+          <img src="vani.jpg" alt="Cake"/>
+          <strong>Vanilla Dream</strong>
+          <span>Rp 270.000</span>
+        </li>
+      </ul>
+
+      <div class="section-title">Traditional Snacks</div>
+      <ul class="menu-grid snacks-grid">
+        <li data-name="Klepon" data-price="120000" data-img="kle.jpg" class="snack-item">
+          <img src="kle.jpg" alt="Snack"/>
+          <strong>Klepon</strong>
+          <span>Rp 120.000</span>
+        </li>
+        <li data-name="Onde-Onde" data-price="100000" data-img="ond.jpg" class="snack-item">
+          <img src="ond.jpg" alt="Snack"/>
+          <strong>Onde-Onde</strong>
+          <span>Rp 100.000</span>
+        </li>
+        <li data-name="Gethuk" data-price="140000" data-img="get.jpg" class="snack-item">
+          <img src="get.jpg" alt="Snack"/>
+          <strong>Gethuk</strong>
+          <span>Rp 140.000</span>
+        </li>
+        <li data-name="Bogis Jawa" data-price="160000" data-img="bogjaw.jpg" class="snack-item">
+          <img src="bogjaw.jpg" alt="Snack"/>
+          <strong>Bogis Jawa</strong>
+          <span>Rp 160.000</span>
+        </li>
+        <li data-name="Rangi" data-price="130000" data-img="rang.jpg" class="snack-item">
+          <img src="rang.jpg" alt="Snack"/>
+          <strong>Rangi</strong>
+          <span>Rp 130.000</span>
+        </li>
+      </ul>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact</h2>
+      <form class="contact-form" onsubmit="handleContact(event)">
+        <input type="text" id="name" placeholder="Your name" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <textarea id="message" placeholder="Message"></textarea>
+        <button class="btn primary" type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> LumCake — Made with pastel love</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <!-- Product modal -->
+  <div id="productModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close aria-label="Close">✕</button>
+      <div class="modal-body">
+        <img id="modalImg" src="" alt=""/>
+        <div class="modal-info">
+          <h3 id="modalName"></h3>
+          <p id="modalPrice"></p>
+          <p>Delicious small-batch cake with optional add-ons at checkout.</p>
+          <div class="modal-actions">
+            <button id="buyBtn" class="btn primary">Add to Cart — <span id="buyPrice"></span></button>
+            <button class="btn ghost" data-close>Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Sidebar -->
+  <div id="cartSidebar" class="cart-sidebar" aria-hidden="true">
+    <div class="cart-header">
+      <h2>🛒 Cart</h2>
+      <button id="closeCartBtn" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items">
+      <!-- Cart items will be added here -->
+    </div>
+    <div class="cart-summary">
+      <div class="summary-row">
+        <span>Subtotal:</span>
+        <span id="subtotal">Rp 0</span>
+      </div>
+      <div class="summary-row">
+        <label for="quantityMultiplier">Quantity Multiplier:</label>
+        <input type="number" id="quantityMultiplier" min="1" value="1" />
+      </div>
+      <div class="summary-row total">
+        <span>Total:</span>
+        <span id="cartTotal">Rp 0</span>
+      </div>
+      <button id="checkoutBtn" class="btn primary full-width">Checkout</button>
+    </div>
+  </div>
+
+  <!-- Cart Toggle Button -->
+  <button id="cartToggleBtn" class="cart-toggle-btn" aria-label="Toggle cart">
+    🛒 <span id="cartCount">0</span>
+  </button>
+</body>
+</html>

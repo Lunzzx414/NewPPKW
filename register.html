@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Register — LumCake</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo-wrap">
+      <a href="index.html" style="text-decoration:none;display:flex;align-items:center;">
+        <img src="Lumcakees.png" alt="LumCake logo" class="logo">
+      </a>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="login.html" class="nav-auth">Login</a>
+      <a href="account.html" class="nav-auth">Account</a>
+    </nav>
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-container">
+      <div class="auth-box">
+        <h1>Join the Magic! ✨</h1>
+        <p class="auth-subtitle">Create your LumCake account and start ordering dreamy treats</p>
+        
+        <form class="auth-form" onsubmit="handleRegister(event)">
+          <div class="form-group">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" placeholder="John Doe" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+62 812-3456-7890" required />
+          </div>
+
+          <div class="form-group">
+            <label for="address">Delivery Address</label>
+            <textarea id="address" name="address" placeholder="Your full address" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="profilepic">Profile Picture (Optional)</label>
+            <input type="file" id="profilepic" name="profilepic" accept="image/*" />
+            <small>Upload a profile picture to personalize your account</small>
+          </div>          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required />
+          </div>
+
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="••••••••" required />
+          </div>
+
+          <div class="form-group checkbox">
+            <input type="checkbox" id="terms" name="terms" required />
+            <label for="terms">I agree to the Terms & Conditions</label>
+          </div>
+
+          <button class="btn primary full-width" type="submit">Create Account</button>
+        </form>
+
+        <p class="auth-footer">
+          Already have an account? <a href="login.html">Sign in</a>
+        </p>
+      </div>
+
+      <div class="auth-art">
+        <div class="plate-glow"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> LumCake — Made with pastel love</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function handleRegister(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      const fullname = document.getElementById('fullname').value;
+      const profilepic = document.getElementById('profilepic');
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      localStorage.setItem('userEmail', email);
+      localStorage.setItem('userName', fullname);
+      localStorage.setItem('userPhone', document.getElementById('phone').value);
+      localStorage.setItem('userAddress', document.getElementById('address').value);
+      localStorage.setItem('isLoggedIn', 'true');
+      
+      // Handle profile picture upload
+      if (profilepic.files && profilepic.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          localStorage.setItem('profilePicture', e.target.result);
+          alert(`Welcome to LumCake, ${fullname}! 🎉`);
+          window.location.href = 'account.html';
+        };
+        reader.readAsDataURL(profilepic.files[0]);
+      } else {
+        alert(`Welcome to LumCake, ${fullname}! 🎉`);
+        window.location.href = 'account.html';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — LumCake</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo-wrap">
+      <a href="index.html" style="text-decoration:none;display:flex;align-items:center;">
+        <img src="Lumcakees.png" alt="LumCake logo" class="logo">
+      </a>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="register.html" class="nav-auth">Register</a>
+      <a href="account.html" class="nav-auth">Account</a>
+    </nav>
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-container">
+      <div class="auth-box">
+        <h1>Welcome Back! 👋</h1>
+        <p class="auth-subtitle">Sign in to your LumCake account</p>
+        
+        <form class="auth-form" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required />
+          </div>
+
+          <div class="form-group checkbox">
+            <input type="checkbox" id="remember" name="remember" />
+            <label for="remember">Remember me</label>
+          </div>
+
+          <button class="btn primary full-width" type="submit">Sign In</button>
+        </form>
+
+        <div class="auth-divider">or</div>
+
+        <button class="btn ghost full-width" onclick="loginWithGoogle()">Continue with Google</button>
+
+        <p class="auth-footer">
+          Don't have an account? <a href="register.html">Create one</a>
+        </p>
+      </div>
+
+      <div class="auth-art">
+        <div class="plate-glow"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> LumCake — Made with pastel love</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      localStorage.setItem('userEmail', email);
+      localStorage.setItem('isLoggedIn', 'true');
+      
+      // Check if user has profile picture, if not ask for one
+      const hasProfilePic = localStorage.getItem('profilePicture');
+      if (!hasProfilePic) {
+        showProfilePicturePrompt();
+      } else {
+        alert(`Welcome back! 🎉`);
+        window.location.href = 'account.html';
+      }
+    }
+
+    function showProfilePicturePrompt() {
+      const modal = document.createElement('div');
+      modal.className = 'modal';
+      modal.setAttribute('aria-hidden', 'false');
+      modal.innerHTML = `
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-panel" role="dialog" aria-modal="true">
+          <button class="modal-close" data-close aria-label="Close">✕</button>
+          <div class="modal-body small">
+            <h3>Add Profile Picture 📸</h3>
+            <p>Would you like to add a profile picture to personalize your account?</p>
+            <input type="file" id="tempPicInput" accept="image/*" />
+            <div class="modal-actions">
+              <button class="btn primary" onclick="saveTempProfilePic()">Upload</button>
+              <button class="btn ghost" onclick="skipProfilePic()">Skip for now</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.querySelector('[data-close]').addEventListener('click', skipProfilePic);
+    }
+
+    function saveTempProfilePic() {
+      const input = document.getElementById('tempPicInput');
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          localStorage.setItem('profilePicture', e.target.result);
+          document.querySelector('.modal').remove();
+          alert(`Profile picture added! 🎉`);
+          window.location.href = 'account.html';
+        };
+        reader.readAsDataURL(input.files[0]);
+      } else {
+        alert('Please select an image file');
+      }
+    }
+
+    function skipProfilePic() {
+      document.querySelector('.modal').remove();
+      alert(`Welcome back! 🎉`);
+      window.location.href = 'account.html';
+    }
+
+    function loginWithGoogle() {
+      alert('Google login coming soon! 🚀');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Account — LumCake</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo-wrap">
+      <a href="index.html" style="text-decoration:none;display:flex;align-items:center;">
+        <img src="Lumcakees.png" alt="LumCake logo" class="logo">
+      </a>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#menu">Menu</a>
+      <a href="login.html" class="nav-auth" id="navAuthBtn">Login</a>
+    </nav>
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+  </header>
+
+  <main class="account-main">
+    <div id="notLoggedIn" class="not-logged-container">
+      <section class="auth-container">
+        <div class="auth-box">
+          <h1>Access Your Account 🔐</h1>
+          <p class="auth-subtitle">Please log in to view your profile and orders</p>
+          <div style="display:flex;gap:12px;flex-direction:column">
+            <a href="login.html" class="btn primary full-width">Sign In</a>
+            <a href="register.html" class="btn ghost full-width">Create Account</a>
+          </div>
+        </div>
+        <div class="auth-art">
+          <div class="plate-glow"></div>
+        </div>
+      </section>
+    </div>
+
+    <div id="loggedIn" class="account-container" style="display:none;">
+      <aside class="account-sidebar">
+        <div class="profile-header">
+          <div class="profile-avatar" id="profileAvatarImg">👤</div>
+          <h2 id="profileName">User</h2>
+          <p id="profileEmail">email@example.com</p>
+        </div>
+        <nav class="account-nav">
+          <button class="account-nav-btn active" onclick="showSection('profile')">Profile</button>
+          <button class="account-nav-btn" onclick="showSection('orders')">My Orders</button>
+          <button class="account-nav-btn" onclick="showSection('addresses')">Addresses</button>
+          <button class="account-nav-btn" onclick="showSection('settings')">Settings</button>
+          <button class="account-nav-btn" onclick="logout()">Logout 👋</button>
+        </nav>
+      </aside>
+
+      <section class="account-content">
+        <!-- Profile Section -->
+        <div id="profile" class="account-section active">
+          <h1>My Profile</h1>
+          <div class="profile-card">
+            <div class="profile-upload-section">
+              <div class="profile-pic-large" id="profilePicLarge">👤</div>
+              <button class="btn primary" onclick="triggerPictureUpload()">Change Picture</button>
+              <input type="file" id="pictureInput" accept="image/*" style="display:none;" onchange="handlePictureUpload(event)" />
+            </div>
+            <div class="profile-info">
+              <h3>Personal Information</h3>
+              <div class="info-group">
+                <label>Full Name</label>
+                <p id="infoName">-</p>
+              </div>
+              <div class="info-group">
+                <label>Email</label>
+                <p id="infoEmail">-</p>
+              </div>
+              <div class="info-group">
+                <label>Phone</label>
+                <p id="infoPhone">-</p>
+              </div>
+              <div class="info-group">
+                <label>Delivery Address</label>
+                <p id="infoAddress">-</p>
+              </div>
+            </div>
+            <button class="btn primary" onclick="openEditProfileModal()">Edit Profile</button>
+          </div>
+        </div>
+
+        <!-- Orders Section -->
+        <div id="orders" class="account-section">
+          <h1>My Orders</h1>
+          <div id="ordersList" class="orders-list">
+            <!-- Orders will be populated here -->
+          </div>
+        </div>
+
+        <!-- Addresses Section -->
+        <div id="addresses" class="account-section">
+          <h1>Delivery Addresses</h1>
+          <div class="address-list">
+            <div class="address-card">
+              <div class="address-header">
+                <h3>My Home</h3>
+                <span class="badge primary">Default</span>
+              </div>
+              <p id="addressText">-</p>
+              <div class="address-actions">
+                <button class="btn ghost" onclick="editAddress()">Edit</button>
+                <button class="btn ghost" onclick="deleteAddress()">Remove</button>
+              </div>
+            </div>
+          </div>
+          <button class="btn primary" onclick="addAddress()">Add New Address</button>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settings" class="account-section">
+          <h1>Account Settings</h1>
+          <div class="settings-card">
+            <h3>Preferences</h3>
+            <div class="setting-item">
+              <label>
+                <input type="checkbox" id="emailNotifs" checked />
+                Receive order notifications
+              </label>
+            </div>
+            <div class="setting-item">
+              <label>
+                <input type="checkbox" id="promoEmails" checked />
+                Receive promotional emails
+              </label>
+            </div>
+            <div class="setting-item">
+              <label>
+                <input type="checkbox" id="darkMode" />
+                Dark mode
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3>Security</h3>
+            <button class="btn primary" onclick="changePassword()">Change Password</button>
+            <button class="btn ghost" onclick="twoFactorAuth()">Enable Two-Factor Authentication</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> LumCake — Made with pastel love</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Check if user is logged in
+    function initAccount() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const notLoggedContainer = document.getElementById('notLoggedIn');
+      const loggedInContainer = document.getElementById('loggedIn');
+      const navAuthBtn = document.getElementById('navAuthBtn');
+
+      if (isLoggedIn) {
+        notLoggedContainer.style.display = 'none';
+        loggedInContainer.style.display = 'grid';
+        navAuthBtn.textContent = 'Logout';
+        navAuthBtn.onclick = logout;
+        loadProfileData();
+      } else {
+        notLoggedContainer.style.display = 'grid';
+        loggedInContainer.style.display = 'none';
+      }
+    }
+
+    function loadProfileData() {
+      const name = localStorage.getItem('userName') || 'Guest User';
+      const email = localStorage.getItem('userEmail') || 'user@example.com';
+      const phone = localStorage.getItem('userPhone') || 'Not provided';
+      const address = localStorage.getItem('userAddress') || 'Not provided';
+      const profilePicture = localStorage.getItem('profilePicture');
+
+      document.getElementById('profileName').textContent = name;
+      document.getElementById('profileEmail').textContent = email;
+      document.getElementById('infoName').textContent = name;
+      document.getElementById('infoEmail').textContent = email;
+      document.getElementById('infoPhone').textContent = phone;
+      document.getElementById('infoAddress').textContent = address;
+      document.getElementById('addressText').textContent = address;
+
+      // Load profile picture if exists
+      if (profilePicture) {
+        updateProfilePicture(profilePicture);
+      }
+      loadOrders();
+    }
+
+    function loadOrders() {
+      const ordersList = document.getElementById('ordersList');
+      const orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+      if (orders.length === 0) {
+        ordersList.innerHTML = '<p style="text-align:center;color:var(--muted)">No orders yet. <a href="index.html#menu">Start ordering!</a></p>';
+        return;
+      }
+
+      ordersList.innerHTML = orders.map((order, i) => `
+        <div class="order-card">
+          <div class="order-header">
+            <h3>Order #${i + 1}</h3>
+            <span class="badge success">${order.status || 'Completed'}</span>
+          </div>
+          <p><strong>Items:</strong> ${order.items || 'N/A'}</p>
+          <p><strong>Total:</strong> ${order.total || 'N/A'}</p>
+          <p><strong>Date:</strong> ${order.date || new Date().toLocaleDateString()}</p>
+        </div>
+      `).join('');
+    }
+
+    function showSection(sectionId) {
+      document.querySelectorAll('.account-section').forEach(s => s.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+      document.querySelectorAll('.account-nav-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function editProfile() {
+      alert('Edit profile feature coming soon! 📝');
+    }
+
+    function editAddress() {
+      alert('Edit address feature coming soon! 📍');
+    }
+
+    function deleteAddress() {
+      if (confirm('Are you sure you want to remove this address?')) {
+        alert('Address removed!');
+      }
+    }
+
+    function addAddress() {
+      alert('Add address feature coming soon! 📍');
+    }
+
+    function changePassword() {
+      alert('Change password feature coming soon! 🔐');
+    }
+
+    function twoFactorAuth() {
+      alert('Two-factor authentication feature coming soon! 🔒');
+    }
+
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userPhone');
+        localStorage.removeItem('userAddress');
+        localStorage.removeItem('profilePicture');
+        alert('You have been logged out! 👋');
+        window.location.href = 'index.html';
+      }
+    }
+
+    // Profile Picture Upload
+    function triggerPictureUpload() {
+      document.getElementById('pictureInput').click();
+    }
+
+    function handlePictureUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const imageData = e.target.result;
+          localStorage.setItem('profilePicture', imageData);
+          updateProfilePicture(imageData);
+          alert('Profile picture updated! 📸');
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function updateProfilePicture(imageData) {
+      const img = document.createElement('img');
+      img.src = imageData;
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.borderRadius = '50%';
+      img.style.objectFit = 'cover';
+      
+      const avatarElement = document.getElementById('profileAvatarImg');
+      const largeElement = document.getElementById('profilePicLarge');
+      
+      avatarElement.innerHTML = '';
+      avatarElement.appendChild(img.cloneNode());
+      
+      largeElement.innerHTML = '';
+      largeElement.appendChild(img);
+    }
+
+    // Edit Profile Modal
+    function openEditProfileModal() {
+      const name = localStorage.getItem('userName') || '';
+      const phone = localStorage.getItem('userPhone') || '';
+      const address = localStorage.getItem('userAddress') || '';
+
+      const modal = document.createElement('div');
+      modal.className = 'edit-modal';
+      modal.innerHTML = `
+        <div class="edit-modal-content">
+          <div class="edit-modal-header">
+            <h2>Edit Profile</h2>
+            <button class="edit-modal-close" onclick="this.closest('.edit-modal').remove()">✕</button>
+          </div>
+          <form class="edit-form" onsubmit="saveProfileChanges(event)">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="editName" value="${name}" required />
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" id="editPhone" value="${phone}" />
+            </div>
+            <div class="form-group">
+              <label>Delivery Address</label>
+              <textarea id="editAddress">${address}</textarea>
+            </div>
+            <div class="edit-form-actions">
+              <button type="submit" class="btn primary">Save Changes</button>
+              <button type="button" class="btn ghost" onclick="this.closest('.edit-modal').remove()">Cancel</button>
+            </div>
+          </form>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    function saveProfileChanges(event) {
+      event.preventDefault();
+      const name = document.getElementById('editName').value;
+      const phone = document.getElementById('editPhone').value;
+      const address = document.getElementById('editAddress').value;
+
+      localStorage.setItem('userName', name);
+      localStorage.setItem('userPhone', phone);
+      localStorage.setItem('userAddress', address);
+
+      loadProfileData();
+      document.querySelector('.edit-modal').remove();
+      alert('Profile updated successfully! ✨');
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', initAccount);
+  </script>
+</body>
+</html>
